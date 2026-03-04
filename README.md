@@ -4,14 +4,16 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Features
 
-- **🌐 Embedded Web Browser**: Browse web content directly within Minecraft
+- **🌐 Embedded Web Browser**: Browse web content directly within Minecraft with full JavaScript support
+- **⚡ JavaScript & AJAX Support**: Full ES5+ JavaScript execution, Fetch API, and modern web standards via JavaFX WebView
 - **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
 - **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar (like Chrome/Firefox)
-- **🚀 Dual Browser Modes**: 
-  - In-game browser with rendered content
-  - External browser launch with UUID pre-injected
+- **⚙️ Configurable Modes**: 
+  - **Embedded Mode** (default): Full in-game browser with JavaScript support
+  - **External Mode**: System browser for maximum compatibility
 - **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
 - **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
+- **📝 JSON Configuration**: Customize browser behavior via config file
 
 ## Installation
 
@@ -24,11 +26,11 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ### Commands
 
-#### Open In-Game Browser
+#### Open Browser
 ```
 /browser [url]
 ```
-Opens the in-game browser. If no URL is provided, opens to the welcome page.
+Opens a browser according to your configured mode (embedded or external). If no URL is provided, opens to the default URL from config.
 
 **Examples:**
 ```
@@ -37,16 +39,7 @@ Opens the in-game browser. If no URL is provided, opens to the welcome page.
 /browser https://myserver.com/dashboard
 ```
 
-#### Open External Browser
-```
-/browserexternal <url>
-```
-Opens the URL in your system's default browser with UUID automatically injected.
-
-**Example:**
-```
-/browserexternal https://myserver.com/stats
-```
+**Note:** The browser behavior (embedded vs external) is controlled by the configuration file. See [CONFIGURATION.md](CONFIGURATION.md) for details.
 
 ### UUID Injection
 
@@ -69,6 +62,45 @@ Injected URL:  https://example.com/page?foo=bar&player_uuid=12345678-1234-1234-1
 ### Player Avatar
 
 The browser displays your Minecraft skin as an avatar in the top-left corner of the browser toolbar, similar to how Chrome and Firefox display user profiles. The avatar is fetched from [Crafatar](https://crafatar.com/), a free Minecraft avatar API.
+
+## Configuration
+
+The mod can be configured via `config/galaxianexus-browser.json`. On first launch, a default configuration file is created.
+
+### Quick Config Examples
+
+**Embedded Mode (Default) - Full JavaScript Support:**
+```json
+{
+  "mode": "EMBEDDED",
+  "enableJavaScript": true,
+  "enableCookies": true
+}
+```
+
+**External Mode - For Maximum Compatibility:**
+```json
+{
+  "mode": "EXTERNAL"
+}
+```
+
+For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
+
+## JavaScript and AJAX Support
+
+GalaxiaNexus Browser includes full JavaScript and AJAX support via JavaFX WebView:
+
+✅ **Supported Features:**
+- ES5+ JavaScript execution
+- AJAX and Fetch API
+- DOM manipulation
+- Modern web standards (WebKit engine)
+- CSS3 and HTML5
+- React, Vue, Angular, and other frameworks
+
+⚠️ **Performance Note:**
+For lower-end systems, you can switch to external browser mode in the configuration file to reduce performance impact while still maintaining UUID injection functionality.
 
 ## Server Integration
 
@@ -162,14 +194,17 @@ Currently, the mod works out of the box with no configuration required. Future v
 
 ## Roadmap
 
+- [x] **JavaScript execution support** - Implemented via JavaFX WebView
+- [x] **Configuration system** - JSON-based config file
+- [x] **Cookie management** - Supported in embedded mode
 - [ ] Custom packet system for server-triggered browser launches
 - [ ] Browser history and bookmarks
 - [ ] Download support
-- [ ] JavaScript execution support
-- [ ] Form input handling
-- [ ] Cookie management
+- [ ] Form input handling improvements
 - [ ] Multi-tab support
 - [ ] Custom CSS injection for web pages
+- [ ] Screenshot/capture functionality
+- [ ] Browser DevTools integration
 
 ## Contributing
 
