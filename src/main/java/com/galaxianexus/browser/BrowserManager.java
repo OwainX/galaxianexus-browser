@@ -24,8 +24,8 @@ public class BrowserManager {
         
         switch (config.getMode()) {
             case EMBEDDED:
-                // Open embedded browser with JavaScript support
-                BrowserScreen.open(injectedUrl);
+                // Open embedded browser with JavaScript support (MCEF)
+                MCEFBrowserScreen.open(injectedUrl, config);
                 break;
             case EXTERNAL:
                 // Open in system browser

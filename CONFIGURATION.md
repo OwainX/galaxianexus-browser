@@ -15,9 +15,9 @@ The configuration file is automatically created on first launch with default val
 
 ```json
 {
-  "mode": "EXTERNAL",
+  "mode": "EMBEDDED",
   "enableJavaScript": true,
-  "enableCookies": false,
+  "enableCookies": true,
   "browserWidth": 1024,
   "browserHeight": 768,
   "defaultUrl": "about:blank"
@@ -49,9 +49,9 @@ Controls how the browser opens URLs:
 **Type:** `Boolean`  
 **Default:** `true`
 
-Controls JavaScript support preference. 
+Enables or disables JavaScript execution in the embedded Chromium browser (MCEF).
 
-**Note:** Full JavaScript/AJAX support is only available in EXTERNAL mode (system browser). Embedded mode does not support JavaScript due to Minecraft's rendering limitations.
+**Note:** JavaScript is fully supported in EMBEDDED mode via the Chromium engine. Set to `false` only if you want to disable JavaScript for security or performance reasons.
 
 **Example:**
 ```json
@@ -116,44 +116,48 @@ The default URL to open when running `/browser` without arguments.
 
 ### How JavaScript Works
 
-**JavaScript and AJAX support is provided via EXTERNAL mode:**
+**JavaScript and AJAX support is provided via MCEF (Minecraft Chromium Embedded Framework):**
 
-- ✅ **EXTERNAL Mode (Default):** Full JavaScript/AJAX support via your system browser
-  - ES6+ JavaScript execution
-  - AJAX and Fetch API
-  - React, Vue, Angular, and all modern frameworks
-  - Full browser features and DevTools
+- ✅ **EMBEDDED Mode (Default):** Full in-game Chromium browser
+  - **Full Chromium engine** running in Minecraft
+  - **ES6+ JavaScript execution**
+  - **AJAX and Fetch API**
+  - **React, Vue, Angular**, and all modern frameworks
+  - **Cookie and session management**
+  - **UUID automatically injected** in all requests
+  - **Player avatar** displayed in toolbar
+
+- ⚠️ **EXTERNAL Mode (Fallback):** System browser
+  - Opens in Chrome/Firefox/Edge
+  - Reduces performance impact on low-end PCs
+  - Full JavaScript support via system browser
   - UUID automatically injected in URL
-
-- ⚠️ **EMBEDDED Mode:** Basic HTML only, no JavaScript
-  - Simple HTML rendering
-  - No JavaScript execution
-  - No AJAX/dynamic content
-  - Best for static pages only
 
 ### Recommended Setup for Web Apps
 
-**For Custom Web Apps with JavaScript/AJAX (Recommended):**
+**For Custom Web Apps with JavaScript/AJAX (Default):**
 ```json
 {
-  "mode": "EXTERNAL",
-  "enableJavaScript": true
+  "mode": "EMBEDDED",
+  "enableJavaScript": true,
+  "enableCookies": true
 }
 ```
-- Your React/Vue/Angular apps work perfectly
+- Your React/Vue/Angular apps work perfectly in-game
 - AJAX requests function normally
 - UUID is injected automatically
-- Full debugging tools available
+- Full Chromium browser features
+- Seamless in-game experience
 
-**For Simple Static Pages Only:**
+**For Low-End PCs (Performance Fallback):**
 ```json
 {
-  "mode": "EMBEDDED"
+  "mode": "EXTERNAL"
 }
 ```
-- In-game viewing
-- No JavaScript support
-- Basic HTML rendering
+- Reduces Minecraft performance impact
+- Opens in system browser
+- JavaScript still works
 - UUID still injected
 
 ## Performance Tuning

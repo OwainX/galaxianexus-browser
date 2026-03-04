@@ -4,13 +4,14 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Features
 
-- **⚡ Full JavaScript & AJAX Support**: Complete web app support through system browser integration
+- **🌐 Embedded Chromium Browser**: Full in-game browser powered by MCEF (Minecraft Chromium Embedded Framework)
+- **⚡ JavaScript & AJAX Support**: Complete ES6+ JavaScript, AJAX, Fetch API, and all modern web standards
 - **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
 - **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar  
 - **⚙️ Dual Browser Modes**: 
-  - **External Mode** (default): Full JavaScript/AJAX support via system browser
-  - **Embedded Mode**: In-game viewing for basic HTML content
-- **🌐 Modern Web Standards**: Full support for React, Vue, Angular, and other frameworks
+  - **Embedded Mode** (default): Full in-game browser with JavaScript/AJAX via MCEF
+  - **External Mode**: Fallback to system browser for low-end PCs
+- **🚀 Modern Web Standards**: Full support for React, Vue, Angular, and other frameworks
 - **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
 - **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
 - **📝 JSON Configuration**: Customize browser behavior via config file
@@ -69,18 +70,19 @@ The mod can be configured via `config/galaxianexus-browser.json`. On first launc
 
 ### Quick Config Examples
 
-**External Mode (Default) - Full JavaScript Support:**
+**Embedded Mode (Default) - Full JavaScript Support:**
 ```json
 {
-  "mode": "EXTERNAL",
-  "enableJavaScript": true
+  "mode": "EMBEDDED",
+  "enableJavaScript": true,
+  "enableCookies": true
 }
 ```
 
-**Embedded Mode - Basic HTML Viewing:**
+**External Mode - For Low-End PCs:**
 ```json
 {
-  "mode": "EMBEDDED"
+  "mode": "EXTERNAL"
 }
 ```
 
@@ -88,25 +90,26 @@ For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
 
 ## JavaScript and AJAX Support
 
-GalaxiaNexus Browser provides full JavaScript and AJAX support through EXTERNAL mode:
+GalaxiaNexus Browser provides full JavaScript and AJAX support through **MCEF (Minecraft Chromium Embedded Framework)**:
 
-✅ **EXTERNAL Mode Features (Default):**
-- Full ES6+ JavaScript execution
-- AJAX and Fetch API
-- React, Vue, Angular, and all modern frameworks
-- Complete browser DevTools
-- All web standards supported
-- **UUID automatically injected in URL**
+✅ **EMBEDDED Mode Features (Default):**
+- **Full Chromium browser engine** embedded in-game
+- **ES6+ JavaScript execution**
+- **AJAX and Fetch API**
+- **React, Vue, Angular**, and all modern frameworks work perfectly
+- **Your custom web apps** run seamlessly in-game
+- **Cookie support** and session management
+- **UUID automatically injected** in all requests
+- **Player avatar** displayed in browser toolbar
 
-⚠️ **EMBEDDED Mode Limitations:**
-- Basic HTML rendering only
-- No JavaScript execution
-- No AJAX/dynamic content
-- Suitable for static pages only
-- **UUID still injected**
+⚠️ **EXTERNAL Mode (Fallback for Low-End PCs):**
+- Opens in system browser (Chrome/Firefox/Edge)
+- Reduces performance impact
+- UUID still automatically injected
+- Full JavaScript support via system browser
 
-**For web apps with JavaScript/AJAX:** Use EXTERNAL mode (default)  
-**For simple static HTML:** Use EMBEDDED mode
+**For in-game web apps with JavaScript/AJAX:** Use EMBEDDED mode (default)  
+**For reduced performance impact:** Switch to EXTERNAL mode in config
 
 ## Server Integration
 

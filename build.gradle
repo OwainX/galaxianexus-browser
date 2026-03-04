@@ -13,6 +13,7 @@ base {
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabricmc.net/' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -23,6 +24,10 @@ dependencies {
     
     // JSON configuration
     include implementation("com.google.code.gson:gson:2.10.1")
+    
+    // MCEF - Minecraft Chromium Embedded Framework for in-game browser with JavaScript
+    modImplementation "com.github.montoyo:mcef:1.20-1.0.3"
+    include "com.github.montoyo:mcef:1.20-1.0.3"
 }
 
 processResources {
