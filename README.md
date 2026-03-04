@@ -190,14 +190,16 @@ To set up a development environment:
 ## Technical Details
 
 ### Minecraft Version
-- **Minecraft**: 1.21-1.21.4 (compatible with all 1.21.x versions)
+- **Minecraft**: 1.21.x (any version from 1.21 through 1.21.11+)
 - **Fabric Loader**: 0.16.0+
 - **Fabric API**: 0.108.0+
 
 ### Dependencies
 - Fabric API (required)
-- MCEF 2.1.6-1.21.4+ (required for embedded mode)
+- MCEF 2.1.6+ (required for embedded mode - uses 1.21.4 build which is compatible with newer versions)
 - Java 21+ (required)
+
+**Note:** Built against MC 1.21.4 but compatible with all 1.21.x versions including 1.21.11
 
 ### Architecture
 
