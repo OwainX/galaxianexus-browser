@@ -15,9 +15,9 @@ The configuration file is automatically created on first launch with default val
 
 ```json
 {
-  "mode": "EMBEDDED",
+  "mode": "EXTERNAL",
   "enableJavaScript": true,
-  "enableCookies": true,
+  "enableCookies": false,
   "browserWidth": 1024,
   "browserHeight": 768,
   "defaultUrl": "about:blank"
@@ -32,26 +32,29 @@ The configuration file is automatically created on first launch with default val
 
 Controls how the browser opens URLs:
 - `EXTERNAL`: Opens URLs in your system's default browser (Full JavaScript/AJAX support)
-- `EMBEDDED`: Opens URLs in the in-game browser interface (Basic HTML only)
+- `EMBEDDED`: Opens in-game browser via MCEF (Requires MCEF mod to be installed separately)
 
 **Why change this?**
-- Use `EXTERNAL` (default) for full modern web support with JavaScript/AJAX
-- Use `EMBEDDED` only for simple HTML viewing without JavaScript
+- Use `EXTERNAL` (default) for immediate functionality with full JavaScript/AJAX
+- Use `EMBEDDED` after installing MCEF for in-game browser experience
 
-**Example:**
+**Example (switch to embedded after installing MCEF):**
 ```json
 {
-  "mode": "EMBEDDED"
+  "mode": "EMBEDDED",
+  "enableCookies": true
 }
 ```
+
+**Note:** EMBEDDED mode requires MCEF to be installed. See [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md).
 
 ### `enableJavaScript`
 **Type:** `Boolean`  
 **Default:** `true`
 
-Enables or disables JavaScript execution in the embedded Chromium browser (MCEF).
-
-**Note:** JavaScript is fully supported in EMBEDDED mode via the Chromium engine. Set to `false` only if you want to disable JavaScript for security or performance reasons.
+Controls JavaScript preference for both modes:
+- **EXTERNAL mode:** This setting is informational (system browser always has JavaScript)
+- **EMBEDDED mode (with MCEF):** Enables/disables JavaScript in the Chromium engine
 
 **Example:**
 ```json
@@ -62,7 +65,7 @@ Enables or disables JavaScript execution in the embedded Chromium browser (MCEF)
 
 ### `enableCookies`
 **Type:** `Boolean`  
-**Default:** `true`
+**Default:** `false`
 
 Enables or disables cookie storage in the embedded browser.
 
@@ -116,9 +119,17 @@ The default URL to open when running `/browser` without arguments.
 
 ### How JavaScript Works
 
-**JavaScript and AJAX support is provided via MCEF (Minecraft Chromium Embedded Framework):**
+**JavaScript and AJAX are fully supported in both modes:**
 
-- ✅ **EMBEDDED Mode (Default):** Full in-game Chromium browser
+- ✅ **EXTERNAL Mode (Default - Works Out of Box):**
+  - Opens in Chrome/Firefox/Edge
+  - **Full JavaScript/AJAX support** via your browser
+  - **React, Vue, Angular** work perfectly
+  - **UUID automatically injected** in URL
+  - **Zero additional setup**
+  - **Lower performance impact**
+
+- ✅ **EMBEDDED Mode (Requires MCEF Installation):**
   - **Full Chromium engine** running in Minecraft
   - **ES6+ JavaScript execution**
   - **AJAX and Fetch API**
@@ -126,16 +137,24 @@ The default URL to open when running `/browser` without arguments.
   - **Cookie and session management**
   - **UUID automatically injected** in all requests
   - **Player avatar** displayed in toolbar
-
-- ⚠️ **EXTERNAL Mode (Fallback):** System browser
-  - Opens in Chrome/Firefox/Edge
-  - Reduces performance impact on low-end PCs
-  - Full JavaScript support via system browser
-  - UUID automatically injected in URL
+  - **Requires MCEF mod** (see [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md))
 
 ### Recommended Setup for Web Apps
 
-**For Custom Web Apps with JavaScript/AJAX (Default):**
+**Quick Start (Default - No Additional Setup):**
+```json
+{
+  "mode": "EXTERNAL",
+  "enableJavaScript": true
+}
+```
+- Your React/Vue/Angular apps work immediately
+- AJAX requests function normally
+- UUID is injected automatically
+- Opens in system browser
+- Works out of the box
+
+**For In-Game Browser (After Installing MCEF):**
 ```json
 {
   "mode": "EMBEDDED",
@@ -143,22 +162,9 @@ The default URL to open when running `/browser` without arguments.
   "enableCookies": true
 }
 ```
-- Your React/Vue/Angular apps work perfectly in-game
-- AJAX requests function normally
-- UUID is injected automatically
-- Full Chromium browser features
-- Seamless in-game experience
-
-**For Low-End PCs (Performance Fallback):**
-```json
-{
-  "mode": "EXTERNAL"
-}
-```
-- Reduces Minecraft performance impact
-- Opens in system browser
-- JavaScript still works
-- UUID still injected
+- Same JavaScript/AJAX support, but in-game
+- Seamless Minecraft integration
+- Requires MCEF mod installation
 
 ## Performance Tuning
 
