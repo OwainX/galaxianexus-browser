@@ -4,13 +4,13 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Features
 
-- **🌐 Embedded Web Browser**: Browse web content directly within Minecraft with full JavaScript support
-- **⚡ JavaScript & AJAX Support**: Full ES5+ JavaScript execution, Fetch API, and modern web standards via JavaFX WebView
+- **⚡ Full JavaScript & AJAX Support**: Complete web app support through system browser integration
 - **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
-- **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar (like Chrome/Firefox)
-- **⚙️ Configurable Modes**: 
-  - **Embedded Mode** (default): Full in-game browser with JavaScript support
-  - **External Mode**: System browser for maximum compatibility
+- **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar  
+- **⚙️ Dual Browser Modes**: 
+  - **External Mode** (default): Full JavaScript/AJAX support via system browser
+  - **Embedded Mode**: In-game viewing for basic HTML content
+- **🌐 Modern Web Standards**: Full support for React, Vue, Angular, and other frameworks
 - **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
 - **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
 - **📝 JSON Configuration**: Customize browser behavior via config file
@@ -69,19 +69,18 @@ The mod can be configured via `config/galaxianexus-browser.json`. On first launc
 
 ### Quick Config Examples
 
-**Embedded Mode (Default) - Full JavaScript Support:**
+**External Mode (Default) - Full JavaScript Support:**
 ```json
 {
-  "mode": "EMBEDDED",
-  "enableJavaScript": true,
-  "enableCookies": true
+  "mode": "EXTERNAL",
+  "enableJavaScript": true
 }
 ```
 
-**External Mode - For Maximum Compatibility:**
+**Embedded Mode - Basic HTML Viewing:**
 ```json
 {
-  "mode": "EXTERNAL"
+  "mode": "EMBEDDED"
 }
 ```
 
@@ -89,18 +88,25 @@ For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
 
 ## JavaScript and AJAX Support
 
-GalaxiaNexus Browser includes full JavaScript and AJAX support via JavaFX WebView:
+GalaxiaNexus Browser provides full JavaScript and AJAX support through EXTERNAL mode:
 
-✅ **Supported Features:**
-- ES5+ JavaScript execution
+✅ **EXTERNAL Mode Features (Default):**
+- Full ES6+ JavaScript execution
 - AJAX and Fetch API
-- DOM manipulation
-- Modern web standards (WebKit engine)
-- CSS3 and HTML5
-- React, Vue, Angular, and other frameworks
+- React, Vue, Angular, and all modern frameworks
+- Complete browser DevTools
+- All web standards supported
+- **UUID automatically injected in URL**
 
-⚠️ **Performance Note:**
-For lower-end systems, you can switch to external browser mode in the configuration file to reduce performance impact while still maintaining UUID injection functionality.
+⚠️ **EMBEDDED Mode Limitations:**
+- Basic HTML rendering only
+- No JavaScript execution
+- No AJAX/dynamic content
+- Suitable for static pages only
+- **UUID still injected**
+
+**For web apps with JavaScript/AJAX:** Use EXTERNAL mode (default)  
+**For simple static HTML:** Use EMBEDDED mode
 
 ## Server Integration
 
@@ -194,9 +200,9 @@ Currently, the mod works out of the box with no configuration required. Future v
 
 ## Roadmap
 
-- [x] **JavaScript execution support** - Implemented via JavaFX WebView
+- [x] **JavaScript execution support** - Full support via external mode
 - [x] **Configuration system** - JSON-based config file
-- [x] **Cookie management** - Supported in embedded mode
+- [x] **Dual browser modes** - External (JS) and Embedded (basic HTML)
 - [ ] Custom packet system for server-triggered browser launches
 - [ ] Browser history and bookmarks
 - [ ] Download support

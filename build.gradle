@@ -23,27 +23,6 @@ dependencies {
     
     // JSON configuration
     include implementation("com.google.code.gson:gson:2.10.1")
-    
-    // JavaFX for embedded browser with JavaScript support
-    implementation "org.openjfx:javafx-controls:17.0.8"
-    implementation "org.openjfx:javafx-web:17.0.8"
-    include "org.openjfx:javafx-controls:17.0.8:${getJavaFXPlatform()}"
-    include "org.openjfx:javafx-web:17.0.8:${getJavaFXPlatform()}"
-    include "org.openjfx:javafx-base:17.0.8:${getJavaFXPlatform()}"
-    include "org.openjfx:javafx-graphics:17.0.8:${getJavaFXPlatform()}"
-    include "org.openjfx:javafx-media:17.0.8:${getJavaFXPlatform()}"
-}
-
-def getJavaFXPlatform() {
-    def platform = System.getProperty("os.name").toLowerCase()
-    if (platform.contains("win")) {
-        return "win"
-    } else if (platform.contains("mac")) {
-        return "mac"
-    } else if (platform.contains("linux")) {
-        return "linux"
-    }
-    return "linux"
 }
 
 processResources {

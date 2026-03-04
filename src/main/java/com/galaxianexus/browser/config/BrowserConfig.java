@@ -14,9 +14,9 @@ public class BrowserConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String CONFIG_FILE = "config/galaxianexus-browser.json";
     
-    private BrowserMode mode = BrowserMode.EMBEDDED;
+    private BrowserMode mode = BrowserMode.EXTERNAL;
     private boolean enableJavaScript = true;
-    private boolean enableCookies = true;
+    private boolean enableCookies = false;
     private int browserWidth = 1024;
     private int browserHeight = 768;
     private String defaultUrl = "about:blank";

@@ -15,9 +15,9 @@ The configuration file is automatically created on first launch with default val
 
 ```json
 {
-  "mode": "EMBEDDED",
+  "mode": "EXTERNAL",
   "enableJavaScript": true,
-  "enableCookies": true,
+  "enableCookies": false,
   "browserWidth": 1024,
   "browserHeight": 768,
   "defaultUrl": "about:blank"
@@ -28,20 +28,20 @@ The configuration file is automatically created on first launch with default val
 
 ### `mode`
 **Type:** `String` (EMBEDDED | EXTERNAL)  
-**Default:** `EMBEDDED`
+**Default:** `EXTERNAL`
 
 Controls how the browser opens URLs:
-- `EMBEDDED`: Opens URLs in the in-game browser interface
-- `EXTERNAL`: Opens URLs in your system's default browser
+- `EXTERNAL`: Opens URLs in your system's default browser (Full JavaScript/AJAX support)
+- `EMBEDDED`: Opens URLs in the in-game browser interface (Basic HTML only)
 
 **Why change this?**
-- Use `EMBEDDED` for seamless in-game web browsing
-- Use `EXTERNAL` if you experience performance issues or need full modern web support
+- Use `EXTERNAL` (default) for full modern web support with JavaScript/AJAX
+- Use `EMBEDDED` only for simple HTML viewing without JavaScript
 
 **Example:**
 ```json
 {
-  "mode": "EXTERNAL"
+  "mode": "EMBEDDED"
 }
 ```
 
@@ -49,9 +49,9 @@ Controls how the browser opens URLs:
 **Type:** `Boolean`  
 **Default:** `true`
 
-Enables or disables JavaScript execution in the embedded browser.
+Controls JavaScript support preference. 
 
-**Note:** Full JavaScript support requires additional setup (see JavaScript Support section below).
+**Note:** Full JavaScript/AJAX support is only available in EXTERNAL mode (system browser). Embedded mode does not support JavaScript due to Minecraft's rendering limitations.
 
 **Example:**
 ```json
@@ -114,47 +114,47 @@ The default URL to open when running `/browser` without arguments.
 
 ## JavaScript and AJAX Support
 
-### Current Implementation
+### How JavaScript Works
 
-The embedded browser includes JavaFX WebView which provides:
-- ✅ Full JavaScript (ES5+) support
-- ✅ AJAX/Fetch API support
-- ✅ DOM manipulation
-- ✅ Modern web standards (WebKit engine)
-- ✅ CSS3 and HTML5 support
+**JavaScript and AJAX support is provided via EXTERNAL mode:**
 
-### Limitations
+- ✅ **EXTERNAL Mode (Default):** Full JavaScript/AJAX support via your system browser
+  - ES6+ JavaScript execution
+  - AJAX and Fetch API
+  - React, Vue, Angular, and all modern frameworks
+  - Full browser features and DevTools
+  - UUID automatically injected in URL
 
-While JavaFX WebView provides excellent JavaScript support, there are some considerations:
-- **Performance:** May impact frame rates on lower-end systems
-- **Memory:** Uses additional RAM for web rendering
-- **Compatibility:** Some cutting-edge web features may not be supported
+- ⚠️ **EMBEDDED Mode:** Basic HTML only, no JavaScript
+  - Simple HTML rendering
+  - No JavaScript execution
+  - No AJAX/dynamic content
+  - Best for static pages only
 
-### Recommended Setup for Full Web Apps
+### Recommended Setup for Web Apps
 
-For the best experience with modern web applications:
+**For Custom Web Apps with JavaScript/AJAX (Recommended):**
+```json
+{
+  "mode": "EXTERNAL",
+  "enableJavaScript": true
+}
+```
+- Your React/Vue/Angular apps work perfectly
+- AJAX requests function normally
+- UUID is injected automatically
+- Full debugging tools available
 
-1. **Use Embedded Mode (Default)**
-   ```json
-   {
-     "mode": "EMBEDDED",
-     "enableJavaScript": true
-   }
-   ```
-   - Supports React, Vue, Angular, and other modern frameworks
-   - AJAX/Fetch requests work seamlessly
-   - UUID injection is automatic
-
-2. **Use External Mode (Fallback)**
-   ```json
-   {
-     "mode": "EXTERNAL"
-   }
-   ```
-   - If performance is an issue
-   - For maximum compatibility
-   - Full browser features available
-   - UUID is still injected in the URL
+**For Simple Static Pages Only:**
+```json
+{
+  "mode": "EMBEDDED"
+}
+```
+- In-game viewing
+- No JavaScript support
+- Basic HTML rendering
+- UUID still injected
 
 ## Performance Tuning
 
