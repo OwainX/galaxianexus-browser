@@ -20,16 +20,24 @@ public class BrowserManager {
      * Opens a browser based on the configured mode
      */
     public void openBrowser(String url) {
-        String injectedUrl = injectPlayerData(url);
+        UUID playerUUID = getPlayerUUID();
+        if (playerUUID == null) {
+            GalaxiaNexusBrowserMod.LOGGER.error("Cannot open browser: player UUID is null");
+            return;
+        }
         
         switch (config.getMode()) {
             case EMBEDDED:
-                // Open basic embedded browser (HTML only, no JavaScript)
-                BrowserScreen.open(injectedUrl);
+                // Open MCEF embedded browser with full JavaScript/AJAX support
+                client.execute(() -> {
+                    MCEFBrowserScreen screen = new MCEFBrowserScreen(url, playerUUID.toString());
+                    client.setScreen(screen);
+                });
+                GalaxiaNexusBrowserMod.LOGGER.info("Opening embedded browser for: {}", url);
                 break;
             case EXTERNAL:
-                // Open in system browser (Full JavaScript/AJAX support)
-                openExternalBrowser(injectedUrl);
+                // Open in system browser as fallback (for low-end systems)
+                openExternalBrowser(injectPlayerData(url));
                 if (client != null && client.player != null) {
                     client.player.sendMessage(Text.literal("§aOpened in external browser"), false);
                 }

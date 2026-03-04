@@ -14,7 +14,7 @@ public class BrowserConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String CONFIG_FILE = "config/galaxianexus-browser.json";
     
-    private BrowserMode mode = BrowserMode.EXTERNAL;
+    private BrowserMode mode = BrowserMode.EMBEDDED;
     private boolean enableJavaScript = true;
     private boolean enableCookies = false;
     private int browserWidth = 1024;
