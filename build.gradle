@@ -25,9 +25,10 @@ dependencies {
     // JSON configuration
     include implementation("com.google.code.gson:gson:2.10.1")
     
-    // MCEF - Minecraft Chromium Embedded Framework for in-game browser with JavaScript
-    modImplementation "com.github.montoyo:mcef:1.20-1.0.3"
-    include "com.github.montoyo:mcef:1.20-1.0.3"
+    // MCEF - Minecraft Chromium Embedded Framework (optional, installed separately by user)
+    // Users must install MCEF mod separately for embedded browser with JavaScript support
+    // Without MCEF, the mod falls back to external browser mode
+    modCompileOnly files("libs/mcef-1.20.4.jar")
 }
 
 processResources {

@@ -18,10 +18,34 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Installation
 
+### Basic Installation
+
 1. Download the latest release from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
 2. Place the `.jar` file in your Minecraft `mods` folder
 3. Make sure you have [Fabric API](https://modrinth.com/mod/fabric-api) installed
 4. Launch Minecraft with Fabric Loader
+
+**This gives you:** UUID injection, external browser mode, and all core features.
+
+### Optional: Install MCEF for Embedded Browser
+
+For full in-game browser with JavaScript:
+
+1. **Download MCEF** from https://github.com/montoyo/mcef/releases
+2. Place MCEF `.jar` in your `mods` folder
+3. Launch Minecraft (MCEF will download Chromium on first run)
+
+**This adds:** In-game Chromium browser with full JavaScript/AJAX support.
+
+See [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md) for detailed instructions.
+
+### Quick Start (No MCEF)
+
+The mod works perfectly **without MCEF** using external browser mode:
+- Full JavaScript/AJAX support via system browser
+- UUID automatically injected
+- Zero additional setup required
+- Works out of the box!
 
 ## Usage
 
@@ -90,26 +114,36 @@ For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
 
 ## JavaScript and AJAX Support
 
-GalaxiaNexus Browser provides full JavaScript and AJAX support through **MCEF (Minecraft Chromium Embedded Framework)**:
+GalaxiaNexus Browser provides full JavaScript and AJAX support in two ways:
 
-✅ **EMBEDDED Mode Features (Default):**
+### ✅ **With MCEF Installed (Embedded Mode)**
+
+Install MCEF separately to get:
 - **Full Chromium browser engine** embedded in-game
 - **ES6+ JavaScript execution**
 - **AJAX and Fetch API**
-- **React, Vue, Angular**, and all modern frameworks work perfectly
+- **React, Vue, Angular**, and all modern frameworks in-game
 - **Your custom web apps** run seamlessly in-game
 - **Cookie support** and session management
 - **UUID automatically injected** in all requests
 - **Player avatar** displayed in browser toolbar
 
-⚠️ **EXTERNAL Mode (Fallback for Low-End PCs):**
-- Opens in system browser (Chrome/Firefox/Edge)
-- Reduces performance impact
-- UUID still automatically injected
-- Full JavaScript support via system browser
+**[Install MCEF](MCEF_INSTALLATION.md)** to enable embedded mode.
 
-**For in-game web apps with JavaScript/AJAX:** Use EMBEDDED mode (default)  
-**For reduced performance impact:** Switch to EXTERNAL mode in config
+### ✅ **Without MCEF (External Mode - Default)**
+
+Works out of the box with:
+- Opens URLs in system browser (Chrome/Firefox/Edge)
+- **Full JavaScript/AJAX support** via your browser
+- **React, Vue, Angular** work perfectly
+- **UUID automatically injected** in URL
+- **Player avatar** displayed
+- **Zero additional setup**
+- **Lower performance impact**
+
+**Both modes support your custom web apps with JavaScript/AJAX perfectly!**
+
+The only difference is where the browser renders (in-game vs external window).
 
 ## Server Integration
 
