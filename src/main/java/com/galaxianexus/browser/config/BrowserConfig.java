@@ -16,7 +16,7 @@ public class BrowserConfig {
     
     private BrowserMode mode = BrowserMode.EMBEDDED;
     private boolean enableJavaScript = true;
-    private boolean enableCookies = true;
+    private boolean enableCookies = false;
     private int browserWidth = 1024;
     private int browserHeight = 768;
     private String defaultUrl = "about:blank";

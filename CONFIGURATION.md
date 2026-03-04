@@ -15,9 +15,9 @@ The configuration file is automatically created on first launch with default val
 
 ```json
 {
-  "mode": "EMBEDDED",
+  "mode": "EXTERNAL",
   "enableJavaScript": true,
-  "enableCookies": true,
+  "enableCookies": false,
   "browserWidth": 1024,
   "browserHeight": 768,
   "defaultUrl": "about:blank"
@@ -28,30 +28,32 @@ The configuration file is automatically created on first launch with default val
 
 ### `mode`
 **Type:** `String` (EMBEDDED | EXTERNAL)  
-**Default:** `EMBEDDED`
+**Default:** `EXTERNAL`
 
 Controls how the browser opens URLs:
-- `EMBEDDED`: Opens URLs in the in-game browser interface
-- `EXTERNAL`: Opens URLs in your system's default browser
+- `EXTERNAL`: Opens URLs in your system's default browser (Full JavaScript/AJAX support)
+- `EMBEDDED`: Opens in-game browser for basic HTML viewing (No JavaScript)
 
 **Why change this?**
-- Use `EMBEDDED` for seamless in-game web browsing
-- Use `EXTERNAL` if you experience performance issues or need full modern web support
+- Use `EXTERNAL` (default) for web apps with JavaScript/AJAX
+- Use `EMBEDDED` for simple in-game HTML viewing without JavaScript
 
-**Example:**
+**Example (switch to embedded for basic HTML viewing):**
 ```json
 {
-  "mode": "EXTERNAL"
+  "mode": "EMBEDDED"
 }
 ```
+
+**Note:** EMBEDDED mode provides basic HTML viewing only. For JavaScript/AJAX, use EXTERNAL mode.
 
 ### `enableJavaScript`
 **Type:** `Boolean`  
 **Default:** `true`
 
-Enables or disables JavaScript execution in the embedded browser.
-
-**Note:** Full JavaScript support requires additional setup (see JavaScript Support section below).
+Controls JavaScript preference:
+- **EXTERNAL mode:** Full JavaScript support via system browser
+- **EMBEDDED mode:** JavaScript not supported (basic HTML only)
 
 **Example:**
 ```json
@@ -62,7 +64,7 @@ Enables or disables JavaScript execution in the embedded browser.
 
 ### `enableCookies`
 **Type:** `Boolean`  
-**Default:** `true`
+**Default:** `false`
 
 Enables or disables cookie storage in the embedded browser.
 
@@ -114,47 +116,50 @@ The default URL to open when running `/browser` without arguments.
 
 ## JavaScript and AJAX Support
 
-### Current Implementation
+### How JavaScript Works
 
-The embedded browser includes JavaFX WebView which provides:
-- ✅ Full JavaScript (ES5+) support
-- ✅ AJAX/Fetch API support
-- ✅ DOM manipulation
-- ✅ Modern web standards (WebKit engine)
-- ✅ CSS3 and HTML5 support
+**JavaScript and AJAX are fully supported in both modes:**
 
-### Limitations
+- ✅ **EXTERNAL Mode (Default):**
+  - Opens in Chrome/Firefox/Edge
+  - **Full JavaScript/AJAX support**
+  - **React, Vue, Angular** work perfectly
+  - **Your custom web apps** function completely
+  - **UUID automatically injected** in URL
+  - **Zero additional setup**
 
-While JavaFX WebView provides excellent JavaScript support, there are some considerations:
-- **Performance:** May impact frame rates on lower-end systems
-- **Memory:** Uses additional RAM for web rendering
-- **Compatibility:** Some cutting-edge web features may not be supported
+- **EMBEDDED Mode:**
+  - In-game HTML viewer
+  - Basic HTML rendering only
+  - No JavaScript/AJAX support
+  - Good for static pages
+  - **UUID still injected**
 
-### Recommended Setup for Full Web Apps
+### Recommended Setup for Web Apps
 
-For the best experience with modern web applications:
+**Quick Start (Default - No Additional Setup):**
+```json
+{
+  "mode": "EXTERNAL",
+  "enableJavaScript": true
+}
+```
+- Your React/Vue/Angular apps work immediately
+- AJAX requests function normally
+- UUID is injected automatically
+- Opens in system browser
+- Works out of the box
 
-1. **Use Embedded Mode (Default)**
-   ```json
-   {
-     "mode": "EMBEDDED",
-     "enableJavaScript": true
-   }
-   ```
-   - Supports React, Vue, Angular, and other modern frameworks
-   - AJAX/Fetch requests work seamlessly
-   - UUID injection is automatic
-
-2. **Use External Mode (Fallback)**
-   ```json
-   {
-     "mode": "EXTERNAL"
-   }
-   ```
-   - If performance is an issue
-   - For maximum compatibility
-   - Full browser features available
-   - UUID is still injected in the URL
+**For Simple HTML Viewing In-Game:**
+```json
+{
+  "mode": "EMBEDDED"
+}
+```
+- Basic HTML rendering in Minecraft
+- No JavaScript support
+- Good for help pages/static content
+- Lower resource usage
 
 ## Performance Tuning
 

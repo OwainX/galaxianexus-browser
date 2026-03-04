@@ -4,31 +4,47 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Features
 
-- **🌐 Embedded Web Browser**: Browse web content directly within Minecraft
-- **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
-- **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar (like Chrome/Firefox)
-- **🚀 Dual Browser Modes**: 
-  - In-game browser with rendered content
-  - External browser launch with UUID pre-injected
+- **🌐 Embedded Chromium Browser**: Full-featured web browser running inside Minecraft using MCEF
+- **⚡ Complete JavaScript & AJAX Support**: Run React, Vue, Angular, and any modern web app
+- **🔑 Automatic UUID Injection**: Player UUID automatically injected into all web requests
+- **🎨 Player Avatar Display**: Shows your Minecraft skin avatar  
+- **⚙️ Dual Browser Modes**: 
+  - **Embedded Mode** (default): Full Chromium browser with JavaScript/AJAX inside Minecraft
+  - **External Mode** (fallback): Opens system browser for low-end PCs
+- **🚀 Modern Web Standards**: ES6+, WebGL, Canvas, all modern web APIs supported
 - **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
 - **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
+- **📝 JSON Configuration**: Customize browser behavior via config file
 
 ## Installation
 
+### Basic Installation
+
 1. Download the latest release from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
 2. Place the `.jar` file in your Minecraft `mods` folder
-3. Make sure you have [Fabric API](https://modrinth.com/mod/fabric-api) installed
+3. Make sure you have:
+   - [Fabric API](https://modrinth.com/mod/fabric-api) installed
+   - [MCEF](https://modrinth.com/mod/mcef) installed (for embedded browser)
 4. Launch Minecraft with Fabric Loader
+
+**This gives you:** Full Chromium browser with JavaScript/AJAX inside Minecraft!
+
+The mod works **out of the box** with embedded browser mode:
+- Full Chromium browser rendering inside Minecraft
+- Complete JavaScript/AJAX support
+- UUID automatically injected
+- Your React/Vue/Angular apps work perfectly in-game
+- If MCEF is not installed, automatically falls back to external mode
 
 ## Usage
 
 ### Commands
 
-#### Open In-Game Browser
+#### Open Browser
 ```
 /browser [url]
 ```
-Opens the in-game browser. If no URL is provided, opens to the welcome page.
+Opens a browser according to your configured mode (embedded or external). If no URL is provided, opens to the default URL from config.
 
 **Examples:**
 ```
@@ -37,16 +53,7 @@ Opens the in-game browser. If no URL is provided, opens to the welcome page.
 /browser https://myserver.com/dashboard
 ```
 
-#### Open External Browser
-```
-/browserexternal <url>
-```
-Opens the URL in your system's default browser with UUID automatically injected.
-
-**Example:**
-```
-/browserexternal https://myserver.com/stats
-```
+**Note:** The browser behavior (embedded vs external) is controlled by the configuration file. See [CONFIGURATION.md](CONFIGURATION.md) for details.
 
 ### UUID Injection
 
@@ -69,6 +76,61 @@ Injected URL:  https://example.com/page?foo=bar&player_uuid=12345678-1234-1234-1
 ### Player Avatar
 
 The browser displays your Minecraft skin as an avatar in the top-left corner of the browser toolbar, similar to how Chrome and Firefox display user profiles. The avatar is fetched from [Crafatar](https://crafatar.com/), a free Minecraft avatar API.
+
+## Configuration
+
+The mod can be configured via `config/galaxianexus-browser.json`. On first launch, a default configuration file is created.
+
+### Quick Config Examples
+
+**Embedded Mode (Default) - Full JavaScript Support:**
+```json
+{
+  "mode": "EMBEDDED",
+  "enableJavaScript": true,
+  "enableCookies": true
+}
+```
+
+**External Mode - For Low-End PCs:**
+```json
+{
+  "mode": "EXTERNAL"
+}
+```
+
+For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
+
+## JavaScript and AJAX Support
+
+GalaxiaNexus Browser provides full JavaScript and AJAX support through **MCEF (Minecraft Chromium Embedded Framework)**:
+
+### ✅ **Embedded Mode (Default - Full Chromium Browser)**
+
+Full-featured browser inside Minecraft:
+- Chromium browser renders directly in-game
+- **Complete ES6+ JavaScript support** 
+- **AJAX, Fetch API, WebSockets**
+- **React, Vue, Angular** work perfectly
+- **WebGL, Canvas, modern web APIs**
+- **Your custom web apps** run seamlessly
+- **UUID automatically injected** in requests
+- **Player avatar** can be displayed  
+- **Fully interactive** - click, type, scroll
+
+**Powered by:** [MCEF](https://github.com/CinemaMod/mcef) - Minecraft Chromium Embedded Framework
+
+### **External Mode (Fallback for Low-End PCs)**
+
+For systems that can't run MCEF:
+- Opens URLs in system browser
+- Full JavaScript support
+- UUID still injected
+- Lower resource usage
+- Automatic fallback if MCEF not installed
+
+**For modern web apps:** Use Embedded mode (default)  
+**For low-end systems:** Switch to External mode in config
 
 ## Server Integration
 
@@ -94,7 +156,7 @@ For automatic browser launching without user interaction, the server can use a c
 ## Building from Source
 
 ### Prerequisites
-- Java 17 or higher
+- Java 21 or higher
 - Gradle (included via wrapper)
 
 ### Build Steps
@@ -128,13 +190,16 @@ To set up a development environment:
 ## Technical Details
 
 ### Minecraft Version
-- **Minecraft**: 1.20.4
-- **Fabric Loader**: 0.15.3+
-- **Fabric API**: 0.91.2+
+- **Minecraft**: 1.21.x (any version from 1.21 through 1.21.11+)
+- **Fabric Loader**: 0.16.0+
+- **Fabric API**: 0.108.0+
 
 ### Dependencies
 - Fabric API (required)
-- Java 17+ (required)
+- MCEF 2.1.6+ (required for embedded mode - uses 1.21.4 build which is compatible with newer versions)
+- Java 21+ (required)
+
+**Note:** Built against MC 1.21.4 but compatible with all 1.21.x versions including 1.21.11
 
 ### Architecture
 
@@ -142,8 +207,8 @@ The mod consists of several key components:
 
 1. **GalaxiaNexusBrowserMod**: Main mod entry point, registers commands
 2. **BrowserManager**: Handles UUID injection, player data, and browser operations
-3. **BrowserScreen**: Custom Minecraft screen that displays the browser UI
-4. **WebContentRenderer**: Renders web content within the game interface
+3. **MCEFBrowserScreen**: Embedded Chromium browser screen with full JavaScript support
+4. **BrowserConfig**: JSON-based configuration system for browser modes and settings
 
 ### API Integration
 
@@ -162,14 +227,17 @@ Currently, the mod works out of the box with no configuration required. Future v
 
 ## Roadmap
 
+- [x] **JavaScript execution support** - Full support via external mode
+- [x] **Configuration system** - JSON-based config file
+- [x] **Dual browser modes** - External (JS) and Embedded (basic HTML)
 - [ ] Custom packet system for server-triggered browser launches
 - [ ] Browser history and bookmarks
 - [ ] Download support
-- [ ] JavaScript execution support
-- [ ] Form input handling
-- [ ] Cookie management
+- [ ] Form input handling improvements
 - [ ] Multi-tab support
 - [ ] Custom CSS injection for web pages
+- [ ] Screenshot/capture functionality
+- [ ] Browser DevTools integration
 
 ## Contributing
 
@@ -188,7 +256,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - [Fabric](https://fabricmc.net/) - Mod loader and API
+- [MCEF](https://github.com/CinemaMod/mcef) - Minecraft Chromium Embedded Framework
 - [Crafatar](https://crafatar.com/) - Minecraft avatar rendering API
+- [CinemaMod](https://github.com/CinemaMod) - For maintaining MCEF
 - Minecraft community for inspiration and support
 
 ## Support
