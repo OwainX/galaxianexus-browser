@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "galaxianexus-browser",
+  "version": "${version}",
+  "name": "GalaxiaNexus Browser",
+  "description": "An embedded web browser for Minecraft with UUID injection support",
+  "authors": [
+    "GalaxiaNexus Team"
+  ],
+  "contact": {
+    "homepage": "https://github.com/yourusername/galaxianexus-browser",
+    "sources": "https://github.com/yourusername/galaxianexus-browser"
+  },
+  "license": "MIT",
+  "icon": "assets/galaxianexus-browser/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.galaxianexus.browser.GalaxiaNexusBrowserMod"
+    ]
+  },
+  "mixins": [
+    "galaxianexus-browser.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~1.20.4",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

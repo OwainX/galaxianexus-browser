@@ -1,0 +1,203 @@
+# GalaxiaNexus Browser
+
+A Minecraft Fabric mod that provides an embedded web browser interface with automatic UUID injection for seamless integration with web services.
+
+## Features
+
+- **🌐 Embedded Web Browser**: Browse web content directly within Minecraft
+- **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
+- **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar (like Chrome/Firefox)
+- **🚀 Dual Browser Modes**: 
+  - In-game browser with rendered content
+  - External browser launch with UUID pre-injected
+- **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
+- **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
+
+## Installation
+
+1. Download the latest release from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
+2. Place the `.jar` file in your Minecraft `mods` folder
+3. Make sure you have [Fabric API](https://modrinth.com/mod/fabric-api) installed
+4. Launch Minecraft with Fabric Loader
+
+## Usage
+
+### Commands
+
+#### Open In-Game Browser
+```
+/browser [url]
+```
+Opens the in-game browser. If no URL is provided, opens to the welcome page.
+
+**Examples:**
+```
+/browser
+/browser https://example.com
+/browser https://myserver.com/dashboard
+```
+
+#### Open External Browser
+```
+/browserexternal <url>
+```
+Opens the URL in your system's default browser with UUID automatically injected.
+
+**Example:**
+```
+/browserexternal https://myserver.com/stats
+```
+
+### UUID Injection
+
+The mod automatically injects player data into URLs as query parameters:
+- `player_uuid`: The player's UUID
+- `player_name`: The player's username
+
+**Example:**
+```
+Original URL:  https://example.com/page
+Injected URL:  https://example.com/page?player_uuid=12345678-1234-1234-1234-123456789abc&player_name=PlayerName
+```
+
+If the URL already has query parameters:
+```
+Original URL:  https://example.com/page?foo=bar
+Injected URL:  https://example.com/page?foo=bar&player_uuid=12345678-1234-1234-1234-123456789abc&player_name=PlayerName
+```
+
+### Player Avatar
+
+The browser displays your Minecraft skin as an avatar in the top-left corner of the browser toolbar, similar to how Chrome and Firefox display user profiles. The avatar is fetched from [Crafatar](https://crafatar.com/), a free Minecraft avatar API.
+
+## Server Integration
+
+Server plugin developers can integrate with GalaxiaNexus Browser by sending specially formatted messages to players:
+
+### Sending Browser Links via Chat
+
+Send a clickable text component that runs the `/browser` or `/browserexternal` command:
+
+```java
+// Example: Bukkit/Spigot
+player.sendMessage(
+    Component.text("[Open Dashboard]")
+        .clickEvent(ClickEvent.runCommand("/browser https://yourserver.com/dashboard"))
+        .color(NamedTextColor.AQUA)
+);
+```
+
+### Background Launch (Client-Side)
+
+For automatic browser launching without user interaction, the server can use a custom packet to trigger the browser client-side. This requires a companion server plugin (to be developed separately).
+
+## Building from Source
+
+### Prerequisites
+- Java 17 or higher
+- Gradle (included via wrapper)
+
+### Build Steps
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/galaxianexus-browser.git
+cd galaxianexus-browser
+```
+
+2. Build the mod:
+```bash
+./gradlew build
+```
+
+3. The compiled `.jar` file will be in `build/libs/`
+
+### Development Setup
+
+To set up a development environment:
+
+```bash
+# Generate IDE project files
+./gradlew eclipse   # For Eclipse
+./gradlew idea      # For IntelliJ IDEA
+
+# Run Minecraft client with the mod
+./gradlew runClient
+```
+
+## Technical Details
+
+### Minecraft Version
+- **Minecraft**: 1.20.4
+- **Fabric Loader**: 0.15.3+
+- **Fabric API**: 0.91.2+
+
+### Dependencies
+- Fabric API (required)
+- Java 17+ (required)
+
+### Architecture
+
+The mod consists of several key components:
+
+1. **GalaxiaNexusBrowserMod**: Main mod entry point, registers commands
+2. **BrowserManager**: Handles UUID injection, player data, and browser operations
+3. **BrowserScreen**: Custom Minecraft screen that displays the browser UI
+4. **WebContentRenderer**: Renders web content within the game interface
+
+### API Integration
+
+The mod uses the [Crafatar API](https://crafatar.com/) for rendering player avatars:
+- Avatar URL: `https://crafatar.com/avatars/{uuid}?size={size}&overlay`
+- Supports overlay (second skin layer)
+- Cached and CDN-backed for performance
+
+## Configuration
+
+Currently, the mod works out of the box with no configuration required. Future versions may include:
+- Custom header injection
+- Whitelist/blacklist for URLs
+- Custom avatar sources
+- Browser appearance customization
+
+## Roadmap
+
+- [ ] Custom packet system for server-triggered browser launches
+- [ ] Browser history and bookmarks
+- [ ] Download support
+- [ ] JavaScript execution support
+- [ ] Form input handling
+- [ ] Cookie management
+- [ ] Multi-tab support
+- [ ] Custom CSS injection for web pages
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Fabric](https://fabricmc.net/) - Mod loader and API
+- [Crafatar](https://crafatar.com/) - Minecraft avatar rendering API
+- Minecraft community for inspiration and support
+
+## Support
+
+If you encounter any issues or have questions:
+- Open an [Issue](https://github.com/yourusername/galaxianexus-browser/issues)
+- Join our Discord server (coming soon)
+- Check the [Wiki](https://github.com/yourusername/galaxianexus-browser/wiki) for more documentation
+
+---
+
+**Note**: This mod is client-side only. Players need to install it on their client to use the browser features. Server integration is optional and enhances the experience but is not required for basic functionality.

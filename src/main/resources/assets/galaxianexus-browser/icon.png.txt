@@ -1,0 +1,11 @@
+PLACEHOLDER: Icon file needed
+
+To add a proper icon for this mod:
+1. Create a 128x128 PNG image
+2. Save it as 'icon.png' (replace this .txt file)
+3. The icon will appear in the mods menu
+
+Suggested icon design:
+- A browser window with a star/galaxy theme
+- Minecraft-style pixel art
+- Use colors: blues, purples, and whites for a space/galaxy theme
