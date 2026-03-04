@@ -4,14 +4,13 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ## Features
 
-- **🌐 Embedded Chromium Browser**: Full in-game browser powered by MCEF (Minecraft Chromium Embedded Framework)
-- **⚡ JavaScript & AJAX Support**: Complete ES6+ JavaScript, AJAX, Fetch API, and all modern web standards
+- **⚡ JavaScript & AJAX Support**: Complete web app support through external browser integration
 - **🔑 Automatic UUID Injection**: Player UUID and username are automatically injected into all web requests
 - **🎨 Player Avatar Display**: Shows your Minecraft skin avatar in the browser toolbar  
 - **⚙️ Dual Browser Modes**: 
-  - **Embedded Mode** (default): Full in-game browser with JavaScript/AJAX via MCEF
-  - **External Mode**: Fallback to system browser for low-end PCs
-- **🚀 Modern Web Standards**: Full support for React, Vue, Angular, and other frameworks
+  - **External Mode** (default): Full JavaScript/AJAX support via system browser
+  - **Embedded Mode**: Basic HTML viewing in-game (no JavaScript)
+- **🚀 Modern Web Standards**: React, Vue, Angular support via external mode
 - **💬 Chat Link Support**: Server plugins can send clickable links to launch the browser
 - **⌨️ Simple Commands**: Easy-to-use commands for opening URLs
 - **📝 JSON Configuration**: Customize browser behavior via config file
@@ -27,25 +26,13 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 **This gives you:** UUID injection, external browser mode, and all core features.
 
-### Optional: Install MCEF for Embedded Browser
 
-For full in-game browser with JavaScript:
 
-1. **Download MCEF** from https://github.com/montoyo/mcef/releases
-2. Place MCEF `.jar` in your `mods` folder
-3. Launch Minecraft (MCEF will download Chromium on first run)
-
-**This adds:** In-game Chromium browser with full JavaScript/AJAX support.
-
-See [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md) for detailed instructions.
-
-### Quick Start (No MCEF)
-
-The mod works perfectly **without MCEF** using external browser mode:
+The mod works **out of the box** using external browser mode:
 - Full JavaScript/AJAX support via system browser
 - UUID automatically injected
-- Zero additional setup required
-- Works out of the box!
+- Your React/Vue/Angular apps work perfectly
+- Works immediately!
 
 ## Usage
 
@@ -114,36 +101,31 @@ For detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md).
 
 ## JavaScript and AJAX Support
 
-GalaxiaNexus Browser provides full JavaScript and AJAX support in two ways:
+GalaxiaNexus Browser provides full JavaScript and AJAX support through **External Mode**:
 
-### ✅ **With MCEF Installed (Embedded Mode)**
+### ✅ **External Mode (Default - Full JavaScript)**
 
-Install MCEF separately to get:
-- **Full Chromium browser engine** embedded in-game
-- **ES6+ JavaScript execution**
-- **AJAX and Fetch API**
-- **React, Vue, Angular**, and all modern frameworks in-game
-- **Your custom web apps** run seamlessly in-game
-- **Cookie support** and session management
-- **UUID automatically injected** in all requests
-- **Player avatar** displayed in browser toolbar
-
-**[Install MCEF](MCEF_INSTALLATION.md)** to enable embedded mode.
-
-### ✅ **Without MCEF (External Mode - Default)**
-
-Works out of the box with:
+Works out of the box:
 - Opens URLs in system browser (Chrome/Firefox/Edge)
-- **Full JavaScript/AJAX support** via your browser
+- **Full ES6+ JavaScript support** 
+- **AJAX and Fetch API**
 - **React, Vue, Angular** work perfectly
+- **Your custom web apps** run seamlessly
 - **UUID automatically injected** in URL
-- **Player avatar** displayed
+- **Player avatar** displayed  
 - **Zero additional setup**
-- **Lower performance impact**
 
-**Both modes support your custom web apps with JavaScript/AJAX perfectly!**
+### **Embedded Mode (Basic HTML Only)**
 
-The only difference is where the browser renders (in-game vs external window).
+Optional in-game viewing:
+- Simple HTML rendering in Minecraft
+- No JavaScript execution
+- Good for static content/help pages
+- UUID still injected
+- Lower resource usage
+
+**For web apps with JavaScript/AJAX:** Use External mode (default)  
+**For simple HTML viewing in-game:** Switch to Embedded mode in config
 
 ## Server Integration
 

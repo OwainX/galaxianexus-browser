@@ -24,11 +24,11 @@ public class BrowserManager {
         
         switch (config.getMode()) {
             case EMBEDDED:
-                // Open embedded browser with JavaScript support (MCEF)
-                MCEFBrowserScreen.open(injectedUrl, config);
+                // Open basic embedded browser (HTML only, no JavaScript)
+                BrowserScreen.open(injectedUrl);
                 break;
             case EXTERNAL:
-                // Open in system browser
+                // Open in system browser (Full JavaScript/AJAX support)
                 openExternalBrowser(injectedUrl);
                 if (client != null && client.player != null) {
                     client.player.sendMessage(Text.literal("§aOpened in external browser"), false);

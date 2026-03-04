@@ -32,29 +32,28 @@ The configuration file is automatically created on first launch with default val
 
 Controls how the browser opens URLs:
 - `EXTERNAL`: Opens URLs in your system's default browser (Full JavaScript/AJAX support)
-- `EMBEDDED`: Opens in-game browser via MCEF (Requires MCEF mod to be installed separately)
+- `EMBEDDED`: Opens in-game browser for basic HTML viewing (No JavaScript)
 
 **Why change this?**
-- Use `EXTERNAL` (default) for immediate functionality with full JavaScript/AJAX
-- Use `EMBEDDED` after installing MCEF for in-game browser experience
+- Use `EXTERNAL` (default) for web apps with JavaScript/AJAX
+- Use `EMBEDDED` for simple in-game HTML viewing without JavaScript
 
-**Example (switch to embedded after installing MCEF):**
+**Example (switch to embedded for basic HTML viewing):**
 ```json
 {
-  "mode": "EMBEDDED",
-  "enableCookies": true
+  "mode": "EMBEDDED"
 }
 ```
 
-**Note:** EMBEDDED mode requires MCEF to be installed. See [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md).
+**Note:** EMBEDDED mode provides basic HTML viewing only. For JavaScript/AJAX, use EXTERNAL mode.
 
 ### `enableJavaScript`
 **Type:** `Boolean`  
 **Default:** `true`
 
-Controls JavaScript preference for both modes:
-- **EXTERNAL mode:** This setting is informational (system browser always has JavaScript)
-- **EMBEDDED mode (with MCEF):** Enables/disables JavaScript in the Chromium engine
+Controls JavaScript preference:
+- **EXTERNAL mode:** Full JavaScript support via system browser
+- **EMBEDDED mode:** JavaScript not supported (basic HTML only)
 
 **Example:**
 ```json
@@ -121,23 +120,20 @@ The default URL to open when running `/browser` without arguments.
 
 **JavaScript and AJAX are fully supported in both modes:**
 
-- ✅ **EXTERNAL Mode (Default - Works Out of Box):**
+- ✅ **EXTERNAL Mode (Default):**
   - Opens in Chrome/Firefox/Edge
-  - **Full JavaScript/AJAX support** via your browser
+  - **Full JavaScript/AJAX support**
   - **React, Vue, Angular** work perfectly
+  - **Your custom web apps** function completely
   - **UUID automatically injected** in URL
   - **Zero additional setup**
-  - **Lower performance impact**
 
-- ✅ **EMBEDDED Mode (Requires MCEF Installation):**
-  - **Full Chromium engine** running in Minecraft
-  - **ES6+ JavaScript execution**
-  - **AJAX and Fetch API**
-  - **React, Vue, Angular**, and all modern frameworks
-  - **Cookie and session management**
-  - **UUID automatically injected** in all requests
-  - **Player avatar** displayed in toolbar
-  - **Requires MCEF mod** (see [MCEF_INSTALLATION.md](MCEF_INSTALLATION.md))
+- **EMBEDDED Mode:**
+  - In-game HTML viewer
+  - Basic HTML rendering only
+  - No JavaScript/AJAX support
+  - Good for static pages
+  - **UUID still injected**
 
 ### Recommended Setup for Web Apps
 
@@ -154,17 +150,16 @@ The default URL to open when running `/browser` without arguments.
 - Opens in system browser
 - Works out of the box
 
-**For In-Game Browser (After Installing MCEF):**
+**For Simple HTML Viewing In-Game:**
 ```json
 {
-  "mode": "EMBEDDED",
-  "enableJavaScript": true,
-  "enableCookies": true
+  "mode": "EMBEDDED"
 }
 ```
-- Same JavaScript/AJAX support, but in-game
-- Seamless Minecraft integration
-- Requires MCEF mod installation
+- Basic HTML rendering in Minecraft
+- No JavaScript support
+- Good for help pages/static content
+- Lower resource usage
 
 ## Performance Tuning
 
