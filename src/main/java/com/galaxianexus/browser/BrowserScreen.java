@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.text.Text;
@@ -128,15 +129,16 @@ public class BrowserScreen extends Screen {
                         for (int y = 0; y < bufferedImage.getHeight(); y++) {
                             for (int x = 0; x < bufferedImage.getWidth(); x++) {
                                 int rgb = bufferedImage.getRGB(x, y);
-                                nativeImage.setColor(x, y, rgb);
+                                nativeImage.setColorArgb(x, y, rgb);
                             }
                         }
                         
                         // Register texture on main thread
                         if (client != null) {
                             client.execute(() -> {
-                                playerAvatarTexture = client.getTextureManager().registerDynamicTexture(
-                                    "player_avatar", 
+                                playerAvatarTexture = Identifier.of("galaxianexus", "player_avatar");
+                                client.getTextureManager().registerTexture(
+                                    playerAvatarTexture,
                                     new NativeImageBackedTexture(nativeImage)
                                 );
                                 avatarLoaded = true;
@@ -161,7 +163,7 @@ public class BrowserScreen extends Screen {
         // Render player avatar
         if (avatarLoaded && playerAvatarTexture != null) {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            context.drawTexture(playerAvatarTexture, 10, 10, 0, 0, AVATAR_SIZE, AVATAR_SIZE, AVATAR_SIZE, AVATAR_SIZE);
+            context.drawTexture(RenderLayer::getGuiTextured, playerAvatarTexture, 10, 10, 0.0f, 0.0f, AVATAR_SIZE, AVATAR_SIZE, AVATAR_SIZE, AVATAR_SIZE);
         }
         
         // Render URL field
