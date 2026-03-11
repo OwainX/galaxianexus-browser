@@ -2,6 +2,7 @@ package com.galaxianexus.browser;
 
 import com.cinemamod.mcef.MCEF;
 import com.cinemamod.mcef.MCEFBrowser;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderProgram;
@@ -15,6 +16,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.text.Text;
+import org.lwjgl.opengl.GL11;
 
 public class MCEFBrowserScreen extends Screen {
     private static final int BROWSER_DRAW_OFFSET = 0;
@@ -89,9 +91,12 @@ public class MCEFBrowserScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         
         if (browser != null && browser.getRenderer() != null) {
-            // Note: disableDepthTest/enableDepthTest removed in MC 1.21.11+
-            // GUI rendering handles depth testing automatically
-            RenderSystem.setShaderTexture(0, browser.getRenderer().getTextureID());
+            // Note: In MC 1.21.11+, texture binding APIs changed
+            // Use direct GL calls for texture binding instead of RenderSystem.setShaderTexture
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            
+            // Bind texture using GL11 (compatible across all versions)
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, browser.getRenderer().getTextureID());
             
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
@@ -110,7 +115,9 @@ public class MCEFBrowserScreen extends Screen {
                   .color(255, 255, 255, 255);
             
             BufferRenderer.drawWithGlobalProgram(buffer.end());
-            RenderSystem.setShaderTexture(0, 0);
+            
+            // Unbind texture
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         }
     }
 
