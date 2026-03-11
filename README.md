@@ -23,7 +23,9 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 **IMPORTANT:** This mod requires two separate downloads!
 
 1. **Download GalaxiaNexus Browser** from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
-2. **Download [MCEF](https://modrinth.com/mod/mcef)** - Required for embedded browser with JavaScript
+2. **Download MCEF** - Required for embedded browser with JavaScript
+   - **For MC 1.21.11**: Use [MCEF Keksuccino Fork](https://modrinth.com/mod/mcef-keksuccino) (supports 1.21.11)
+   - **For MC 1.21-1.21.4**: Use [Official MCEF](https://modrinth.com/mod/mcef)
 3. **Download [Fabric API](https://modrinth.com/mod/fabric-api)** - Required for Fabric mods
 4. Place **ALL THREE** `.jar` files in your Minecraft `mods` folder:
    - `galaxianexus-browser-x.x.x.jar`
@@ -206,10 +208,12 @@ To set up a development environment:
 
 ### Dependencies
 - Fabric API (required)
-- MCEF 2.1.6+ (required for embedded mode - uses 1.21.4 build which is compatible with newer versions)
+- MCEF 2.1.6+ or MCEF Keksuccino 2.2.0+ (required for embedded mode)
+  - For MC 1.21.11: Use [MCEF Keksuccino Fork](https://modrinth.com/mod/mcef-keksuccino)
+  - For MC 1.21-1.21.4: Use [Official MCEF](https://modrinth.com/mod/mcef)
 - Java 21+ (required)
 
-**Note:** Built against MC 1.21.4 but compatible with all 1.21.x versions including 1.21.11
+**Note:** Built against MC 1.21.4 but compatible with all 1.21.x versions including 1.21.11. Includes compatibility fixes for API changes in newer Minecraft versions (e.g., Window.getScaleFactor() removal in 1.21.11).
 
 ### Architecture
 

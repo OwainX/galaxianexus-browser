@@ -48,20 +48,26 @@ public class MCEFBrowserScreen extends Screen {
         }
     }
 
+    private double getScaleFactor() {
+        // Calculate scale factor manually (compatible with 1.21.11+)
+        // In 1.21.11, getScaleFactor() was removed, so we calculate it from window dimensions
+        return (double) client.getWindow().getWidth() / (double) client.getWindow().getScaledWidth();
+    }
+
     private int mouseX(double x) {
-        return (int) ((x - BROWSER_DRAW_OFFSET) * client.getWindow().getScaleFactor());
+        return (int) ((x - BROWSER_DRAW_OFFSET) * getScaleFactor());
     }
 
     private int mouseY(double y) {
-        return (int) ((y - BROWSER_DRAW_OFFSET) * client.getWindow().getScaleFactor());
+        return (int) ((y - BROWSER_DRAW_OFFSET) * getScaleFactor());
     }
 
     private int scaleX(double x) {
-        return (int) ((x - BROWSER_DRAW_OFFSET * 2) * client.getWindow().getScaleFactor());
+        return (int) ((x - BROWSER_DRAW_OFFSET * 2) * getScaleFactor());
     }
 
     private int scaleY(double y) {
-        return (int) ((y - BROWSER_DRAW_OFFSET * 2) * client.getWindow().getScaleFactor());
+        return (int) ((y - BROWSER_DRAW_OFFSET * 2) * getScaleFactor());
     }
 
     private void resizeBrowser() {
