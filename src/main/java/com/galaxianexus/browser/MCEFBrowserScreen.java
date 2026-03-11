@@ -91,30 +91,36 @@ public class MCEFBrowserScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         
         if (browser != null && browser.getRenderer() != null) {
-            // Note: In MC 1.21.11+, many RenderSystem methods were removed
-            // Use direct GL calls for texture binding
-            // Color is set per-vertex in the buffer, so no global color needed
+            // Note: MC 1.21.11 changed the BufferBuilder API significantly
+            // Use immediate mode OpenGL for maximum compatibility
             
-            // Bind texture using GL11 (compatible across all versions)
+            // Enable texturing and bind the MCEF browser texture
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, browser.getRenderer().getTextureID());
             
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+            // Set color to white (full brightness/opacity)
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             
-            buffer.vertex(BROWSER_DRAW_OFFSET, height - BROWSER_DRAW_OFFSET, 0)
-                  .texture(0.0f, 1.0f)
-                  .color(255, 255, 255, 255);
-            buffer.vertex(width - BROWSER_DRAW_OFFSET, height - BROWSER_DRAW_OFFSET, 0)
-                  .texture(1.0f, 1.0f)
-                  .color(255, 255, 255, 255);
-            buffer.vertex(width - BROWSER_DRAW_OFFSET, BROWSER_DRAW_OFFSET, 0)
-                  .texture(1.0f, 0.0f)
-                  .color(255, 255, 255, 255);
-            buffer.vertex(BROWSER_DRAW_OFFSET, BROWSER_DRAW_OFFSET, 0)
-                  .texture(0.0f, 0.0f)
-                  .color(255, 255, 255, 255);
+            // Draw textured quad using immediate mode
+            GL11.glBegin(GL11.GL_QUADS);
             
-            BufferRenderer.drawWithGlobalProgram(buffer.end());
+            // Bottom-left vertex
+            GL11.glTexCoord2f(0.0f, 1.0f);
+            GL11.glVertex2f(BROWSER_DRAW_OFFSET, height - BROWSER_DRAW_OFFSET);
+            
+            // Bottom-right vertex
+            GL11.glTexCoord2f(1.0f, 1.0f);
+            GL11.glVertex2f(width - BROWSER_DRAW_OFFSET, height - BROWSER_DRAW_OFFSET);
+            
+            // Top-right vertex
+            GL11.glTexCoord2f(1.0f, 0.0f);
+            GL11.glVertex2f(width - BROWSER_DRAW_OFFSET, BROWSER_DRAW_OFFSET);
+            
+            // Top-left vertex
+            GL11.glTexCoord2f(0.0f, 0.0f);
+            GL11.glVertex2f(BROWSER_DRAW_OFFSET, BROWSER_DRAW_OFFSET);
+            
+            GL11.glEnd();
             
             // Unbind texture
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
