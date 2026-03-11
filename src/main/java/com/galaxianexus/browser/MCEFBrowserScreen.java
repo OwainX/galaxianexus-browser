@@ -91,9 +91,9 @@ public class MCEFBrowserScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         
         if (browser != null && browser.getRenderer() != null) {
-            // Note: In MC 1.21.11+, texture binding APIs changed
-            // Use direct GL calls for texture binding instead of RenderSystem.setShaderTexture
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            // Note: In MC 1.21.11+, many RenderSystem methods were removed
+            // Use direct GL calls for texture binding
+            // Color is set per-vertex in the buffer, so no global color needed
             
             // Bind texture using GL11 (compatible across all versions)
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, browser.getRenderer().getTextureID());
