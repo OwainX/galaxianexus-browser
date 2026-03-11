@@ -20,21 +20,31 @@ A Minecraft Fabric mod that provides an embedded web browser interface with auto
 
 ### Basic Installation
 
-1. Download the latest release from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
-2. Place the `.jar` file in your Minecraft `mods` folder
-3. Make sure you have:
-   - [Fabric API](https://modrinth.com/mod/fabric-api) installed
-   - [MCEF](https://modrinth.com/mod/mcef) installed (for embedded browser)
-4. Launch Minecraft with Fabric Loader
+**IMPORTANT:** This mod requires two separate downloads!
 
-**This gives you:** Full Chromium browser with JavaScript/AJAX inside Minecraft!
+1. **Download GalaxiaNexus Browser** from the [Releases](https://github.com/yourusername/galaxianexus-browser/releases) page
+2. **Download [MCEF](https://modrinth.com/mod/mcef)** - Required for embedded browser with JavaScript
+3. **Download [Fabric API](https://modrinth.com/mod/fabric-api)** - Required for Fabric mods
+4. Place **ALL THREE** `.jar` files in your Minecraft `mods` folder:
+   - `galaxianexus-browser-x.x.x.jar`
+   - `mcef-fabric-x.x.x.jar` ← **Don't forget this!**
+   - `fabric-api-x.x.x.jar`
+5. Launch Minecraft with Fabric Loader
 
-The mod works **out of the box** with embedded browser mode:
-- Full Chromium browser rendering inside Minecraft
-- Complete JavaScript/AJAX support
-- UUID automatically injected
-- Your React/Vue/Angular apps work perfectly in-game
-- If MCEF is not installed, automatically falls back to external mode
+**⚠️ Common Issue:** If you get a crash with "ClassNotFoundException: com.cinemamod.mcef.MCEF", you forgot to install MCEF!
+
+### What You Get:
+
+**With MCEF installed (recommended):**
+- ✅ Full Chromium browser rendering inside Minecraft
+- ✅ Complete JavaScript/AJAX support
+- ✅ UUID automatically injected
+- ✅ Your React/Vue/Angular apps work perfectly in-game
+
+**Without MCEF:**
+- ⚠️ Automatic fallback to external system browser
+- ✅ Still works, but opens in Chrome/Firefox instead of in-game
+- ✅ UUID still injected
 
 ## Usage
 

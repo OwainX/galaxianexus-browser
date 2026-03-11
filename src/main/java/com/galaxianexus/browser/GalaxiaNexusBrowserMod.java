@@ -24,7 +24,33 @@ public class GalaxiaNexusBrowserMod implements ClientModInitializer {
         
         LOGGER.info("GalaxiaNexus Browser Mod initialized! Mode: {}", config.getMode());
         
+        // Check if MCEF is installed when using embedded mode
+        if (config.getMode() == BrowserConfig.BrowserMode.EMBEDDED && !isMCEFAvailable()) {
+            LOGGER.warn("═══════════════════════════════════════════════════════════════");
+            LOGGER.warn("WARNING: MCEF is NOT installed!");
+            LOGGER.warn("Embedded browser mode is enabled but MCEF is not found.");
+            LOGGER.warn("The browser will fall back to external mode.");
+            LOGGER.warn("");
+            LOGGER.warn("To use embedded browser with JavaScript support:");
+            LOGGER.warn("1. Download MCEF from: https://modrinth.com/mod/mcef");
+            LOGGER.warn("2. Install MCEF in your mods folder");
+            LOGGER.warn("3. Restart Minecraft");
+            LOGGER.warn("═══════════════════════════════════════════════════════════════");
+        }
+        
         registerCommands();
+    }
+    
+    /**
+     * Checks if MCEF is available at runtime
+     */
+    private boolean isMCEFAvailable() {
+        try {
+            Class.forName("com.cinemamod.mcef.MCEF");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
     
     private void registerCommands() {

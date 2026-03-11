@@ -17,6 +17,18 @@ public class BrowserManager {
     }
     
     /**
+     * Checks if MCEF is available at runtime
+     */
+    private boolean isMCEFAvailable() {
+        try {
+            Class.forName("com.cinemamod.mcef.MCEF");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+    
+    /**
      * Opens a browser based on the configured mode
      */
     public void openBrowser(String url) {
@@ -28,6 +40,25 @@ public class BrowserManager {
         
         switch (config.getMode()) {
             case EMBEDDED:
+                // Check if MCEF is installed
+                if (!isMCEFAvailable()) {
+                    GalaxiaNexusBrowserMod.LOGGER.error("MCEF is not installed! Embedded browser mode requires MCEF.");
+                    GalaxiaNexusBrowserMod.LOGGER.error("Download MCEF from: https://modrinth.com/mod/mcef");
+                    GalaxiaNexusBrowserMod.LOGGER.error("Falling back to external browser mode...");
+                    
+                    if (client != null && client.player != null) {
+                        client.player.sendMessage(Text.literal("§c[GalaxiaNexus] MCEF not installed! Install MCEF for embedded browser."), false);
+                        client.player.sendMessage(Text.literal("§e[GalaxiaNexus] Download: https://modrinth.com/mod/mcef"), false);
+                        client.player.sendMessage(Text.literal("§e[GalaxiaNexus] Falling back to external browser..."), false);
+                    }
+                    
+                    openExternalBrowser(injectPlayerData(url));
+                    if (client != null && client.player != null) {
+                        client.player.sendMessage(Text.literal("§aOpened in external browser"), false);
+                    }
+                    break;
+                }
+                
                 // Open MCEF embedded browser with full JavaScript/AJAX support
                 client.execute(() -> {
                     MCEFBrowserScreen screen = new MCEFBrowserScreen(url, playerUUID.toString());
