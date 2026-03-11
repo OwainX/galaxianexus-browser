@@ -89,7 +89,8 @@ public class MCEFBrowserScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         
         if (browser != null && browser.getRenderer() != null) {
-            RenderSystem.disableDepthTest();
+            // Note: disableDepthTest/enableDepthTest removed in MC 1.21.11+
+            // GUI rendering handles depth testing automatically
             RenderSystem.setShaderTexture(0, browser.getRenderer().getTextureID());
             
             Tessellator tessellator = Tessellator.getInstance();
@@ -110,7 +111,6 @@ public class MCEFBrowserScreen extends Screen {
             
             BufferRenderer.drawWithGlobalProgram(buffer.end());
             RenderSystem.setShaderTexture(0, 0);
-            RenderSystem.enableDepthTest();
         }
     }
 
